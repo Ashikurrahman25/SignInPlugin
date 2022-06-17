@@ -36,11 +36,12 @@ public class PasswordReset
     }
 }
 
-public class Token
+public class EmailReq
 {
-    public string token;
+    public string uid;
+    public bool emailVerified = true;
 
-    public Token()
+    public EmailReq()
     {
 
     }

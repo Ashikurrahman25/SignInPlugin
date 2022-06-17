@@ -89,20 +89,14 @@ namespace RestAPIHelper
             {
                 ResponseHelper res = response;
                 var txt = JObject.Parse(res.Text);
-                //Debug.Log(txt["localId"]);
-                //Debug.Log(txt["email"]);
-                //Debug.Log(txt["isNewUser"]);
-                //Debug.Log(res.Text);
-                Debug.Log(res.Text);
 
                 if(provider == Provider.Facebook)
                 {
                     if (txt.ContainsKey("needConfirmation"))
                     {
-                        GetIdToken(txt["oauthAccessToken"].ToString());
+                        UIController.instance.WarnFacebookLogin();
                     }
                 }
-          
 
                 data(res.Text);
                 SaveRefreshToken(txt["idToken"].ToString(), txt["refreshToken"].ToString());
@@ -237,36 +231,6 @@ namespace RestAPIHelper
             });
         }
 
-
-        public void GetIdToken(string token)
-        {
-            Token req = new Token();
-            req.token = token;
-            var body_string = JsonConvert.SerializeObject(req);
-            RestClient.Request(new RequestHelper
-            {
-                Uri = $"https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key={WebAPI}",
-                Method = "POST",
-                Timeout = 10,
-                BodyString = body_string
-            }).Then(response =>
-            {
-                ResponseHelper res = response;
-                var txt = JObject.Parse(res.Text);
-                Debug.Log(res.Text);
-                //onSuccess?.Invoke();
-                //Alert.instance.Init("Reset Password", "Password reset link was sent to your email", true);
-
-            }).Catch(err =>
-            {
-                var error = err as RequestException;
-                Debug.LogError(err);
-                UIController.instance.HideLoadingPanel();
-                Alert.instance.Init("Error Occuered!", "An unexpected error occured, try again later", false);
-
-            });
-        }
-
         public void PutData <T>(string child,string identifier, T data, string idToken) where T : class
         {
             var body_string = JsonConvert.SerializeObject(data);
@@ -329,9 +293,7 @@ namespace RestAPIHelper
                 Debug.LogError(err);
             });
         }
-
-
-        
+      
 
         public void LogOut()
         {

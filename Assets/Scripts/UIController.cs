@@ -28,6 +28,7 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI gamesText;
     public GameObject confirmPanel;
     public GameObject ghostProfile;
+    public GameObject warningPanel;
 
     APIHelper api;
     Authentication auth;
@@ -47,7 +48,11 @@ public class UIController : MonoBehaviour
     }
 
    
-
+    public void WarnFacebookLogin()
+    {
+        HideLoadingPanel();
+        MoveIn(warningPanel);
+    }
     public void TryAutoLogin()
     {
         ShowLoadingPanel();
@@ -61,32 +66,30 @@ public class UIController : MonoBehaviour
                  string uID = txt["user_id"].ToString();
                  string idToken = txt["id_token"].ToString();
 
-                 //api.CheckEmailVerified(idToken, (bool isVerified) =>
-                 //{
-                 //    if (!isVerified)
-                 //    {
-                 //        //api.SendVerificationEmail(idToken);
-                 //        MoveIn(confirmPanel);
-                 //        HideLoadingPanel();
-                 //    }
-                 //    else
-                 //    {
-
-                 //    }
-                 //}); 
-
-                 api.GetData("user", uID, idToken, (str) =>
+                 api.CheckEmailVerified(idToken, (bool isVerified) =>
                  {
-                     if (!str.Equals("null"))
+                     if (!isVerified)
                      {
-                         GhostUser ghostUser = JsonConvert.DeserializeObject<GhostUser>(str);
-                         nameText.text = ghostUser.Name;
-                         emailText.text = ghostUser.Email;
-                         ghostCoinText.text = ghostUser.GhostCoin.ToString("00");
-                         totalGameText.text = ghostUser.Games.Count.ToString("00");
+                         //api.SendVerificationEmail(idToken);
+                         MoveIn(confirmPanel);
+                         HideLoadingPanel();
+                     }
+                     else
+                     {
+                         api.GetData("user", uID, idToken, (str) =>
+                         {
+                             if (!str.Equals("null"))
+                             {
+                                 GhostUser ghostUser = JsonConvert.DeserializeObject<GhostUser>(str);
+                                 nameText.text = ghostUser.Name;
+                                 emailText.text = ghostUser.Email;
+                                 ghostCoinText.text = ghostUser.GhostCoin.ToString("00");
+                                 totalGameText.text = ghostUser.Games.Count.ToString("00");
 
-                         CheckGameList(uID, idToken, ghostUser);
-                         ghostProfile.SetActive(true);
+                                 CheckGameList(uID, idToken, ghostUser);
+                                 ghostProfile.SetActive(true);
+                             }
+                         });
                      }
                  });
              });
@@ -109,7 +112,6 @@ public class UIController : MonoBehaviour
         ShowLoadingPanel();
         api.HandleEmailPassword(regEmail.text, regPass.text, true, (string str) =>
         {
-
             OnSignUp(str);
         });
     }
@@ -197,44 +199,42 @@ public class UIController : MonoBehaviour
             string uID = txt["localId"].ToString();
             string idToken = txt["idToken"].ToString();
 
-            //api.CheckEmailVerified(idToken,(bool isVerified)=> 
-            //{
-            //    if (!isVerified)
-            //    {
-            //        api.SendVerificationEmail(idToken);
-            //        MoveIn(confirmPanel);
-            //        HideLoadingPanel();
-            //    }
-            //    else
-            //    {
+            api.CheckEmailVerified(idToken, (bool isVerified) =>
+             {
+                 if (!isVerified)
+                 {
+                     api.SendVerificationEmail(idToken);
+                     MoveIn(confirmPanel);
+                     HideLoadingPanel();
+                 }
+                 else
+                 {
+                     api.GetData("user", uID, idToken, (userData) =>
+                     {
+                         if (userData.Equals("null"))
+                         {
+                             Global.ghostUser.Name = txt["displayName"].ToString();
+                             Global.ghostUser.GhostCoin = 0;
+                             Global.ghostUser.Email = txt["email"].ToString();
+                             Global.ghostUser.UID = uID;
 
-            //    }
-            //});
-
-            api.GetData("user", uID, idToken, (userData) =>
-            {
-                if (userData.Equals("null"))
-                {
-                    Global.ghostUser.Name = txt["displayName"].ToString();
-                    Global.ghostUser.GhostCoin = 0;
-                    Global.ghostUser.Email = txt["email"].ToString();
-                    Global.ghostUser.UID = uID;
-
-                    api.PutData("user", uID, Global.ghostUser, idToken);
-                }
-                else
-                    Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
+                             api.PutData("user", uID, Global.ghostUser, idToken);
+                         }
+                         else
+                             Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
 
 
-                nameText.text = Global.ghostUser.Name;
-                emailText.text = Global.ghostUser.Email;
-                ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
-                CheckGameList(uID, idToken, Global.ghostUser);
+                         nameText.text = Global.ghostUser.Name;
+                         emailText.text = Global.ghostUser.Email;
+                         ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
+                         CheckGameList(uID, idToken, Global.ghostUser);
 
-                totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
-                ghostProfile.SetActive(true);
-                HideLoadingPanel();
-            });
+                         totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
+                         ghostProfile.SetActive(true);
+                         HideLoadingPanel();
+                     });
+                 }
+             });
         });
     }
     public void FacebookLogin()
@@ -249,48 +249,44 @@ public class UIController : MonoBehaviour
         string uID = txt["localId"].ToString();
         string idToken = txt["idToken"].ToString();
 
-        //api.CheckEmailVerified(idToken, (bool isVerified) =>
-        //{
-        //    Debug.Log(isVerified);
-
-        //    if (!isVerified)
-        //    {
-        //        api.SendVerificationEmail(idToken);
-        //        MoveIn(confirmPanel);
-        //        HideLoadingPanel();
-
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //});
-
-        api.GetData("user", uID, idToken, (userData) =>
+        api.CheckEmailVerified(idToken, (bool isVerified) =>
         {
-            if (userData.Equals("null"))
-            {
-                Global.ghostUser.Name = txt["fullName"].ToString();
-                Global.ghostUser.GhostCoin = 0;
-                Global.ghostUser.Email = txt["email"].ToString();
-                Global.ghostUser.UID = uID;
+            Debug.Log(isVerified);
 
-                api.PutData("user", uID, Global.ghostUser, idToken);
+            if (!isVerified)
+            {
+                //api.SendVerificationEmail(idToken);
+                MoveIn(confirmPanel);
+                HideLoadingPanel();
             }
             else
-                Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
+            {
+                api.GetData("user", uID, idToken, (userData) =>
+                {
+                    if (userData.Equals("null"))
+                    {
+                        Global.ghostUser.Name = txt["fullName"].ToString();
+                        Global.ghostUser.GhostCoin = 0;
+                        Global.ghostUser.Email = txt["email"].ToString();
+                        Global.ghostUser.UID = uID;
+
+                        api.PutData("user", uID, Global.ghostUser, idToken);
+                    }
+                    else
+                        Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
 
 
-            nameText.text = Global.ghostUser.Name;
-            emailText.text = Global.ghostUser.Email;
-            ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
+                    nameText.text = Global.ghostUser.Name;
+                    emailText.text = Global.ghostUser.Email;
+                    ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
 
-            CheckGameList(uID, idToken, Global.ghostUser);
-            totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
-            ghostProfile.SetActive(true);
-            HideLoadingPanel();
+                    CheckGameList(uID, idToken, Global.ghostUser);
+                    totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
+                    ghostProfile.SetActive(true);
+                    HideLoadingPanel();
+                });
+            }
         });
-
     }
     public void CheckGameList(string uID, string idToke, GhostUser ghostUser)
     {
