@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4977b529409e9466ab1dbfadabba4672, type: 3}
+  m_Name: Config
+  m_EditorClassIdentifier: 
+  webAPI: AIzaSyA3CJ_6XBuu8q-K148tKk0rwFz_5adBtLI
+  webClientId: 878921656834-b66cshl4ogd42lk0dpnv1kebuggnhpj1.apps.googleusercontent.com
+  webClientIdIOS: 878921656834-b90q6os4ncolvtouhd4aho0i1c6o3s8t.apps.googleusercontent.com
+  authDatabaseURL: https://authentication-89280-default-rtdb.asia-southeast1.firebasedatabase.app/
+  gameName: BD Game
