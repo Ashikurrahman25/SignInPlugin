@@ -189,6 +189,54 @@ public class UIController : MonoBehaviour
         });
     }
 
+    public void AppleLogin()
+    {
+        ShowLoadingPanel();
+        auth.AppleLogin((data) =>
+        {
+            var txt = JObject.Parse(data);
+            string uID = txt["localId"].ToString();
+            string idToken = txt["idToken"].ToString();
+
+            api.CheckEmailVerified(idToken, (bool isVerified) =>
+            {
+                if (!isVerified)
+                {
+                    api.SendVerificationEmail(idToken);
+                    MoveIn(confirmPanel);
+                    HideLoadingPanel();
+                }
+                else
+                {
+                    api.GetData("user", uID, idToken, (userData) =>
+                    {
+                        if (userData.Equals("null"))
+                        {
+                            Global.ghostUser.Name = txt["displayName"].ToString();
+                            Global.ghostUser.GhostCoin = 0;
+                            Global.ghostUser.Email = txt["email"].ToString();
+                            Global.ghostUser.UID = uID;
+
+                            api.PutData("user", uID, Global.ghostUser, idToken);
+                        }
+                        else
+                            Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
+
+
+                        nameText.text = Global.ghostUser.Name;
+                        emailText.text = Global.ghostUser.Email;
+                        ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
+                        CheckGameList(uID, idToken, Global.ghostUser);
+
+                        totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
+                        ghostProfile.SetActive(true);
+                        HideLoadingPanel();
+                    });
+                }
+            });
+        });
+    }
+
     public void GoogleLogin()
     {
         ShowLoadingPanel();

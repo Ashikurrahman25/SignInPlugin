@@ -67,6 +67,7 @@ namespace RestAPIHelper
                     req.postBody = $"access_token={token}&providerId=facebook.com";
                     break;
                 case Provider.Apple:
+                    req.postBody = $"id_token={token}&providerId=apple.com";
                     break;
                 default:
                     break;

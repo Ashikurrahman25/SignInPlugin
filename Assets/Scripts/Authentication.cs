@@ -1,8 +1,10 @@
+using AppleAuth.Interfaces;
 using Facebook.Unity;
 using Google;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -140,6 +142,23 @@ namespace RestAPIHelper
                         data(user);
                     });
                 }
+            });
+        }
+
+        public void AppleLogin(Action<string> data)
+        {
+            AuthApple.instance.SignIn((IAppleIDCredential credentials) =>
+            {
+                var identityToken = Encoding.UTF8.GetString(
+                               credentials.IdentityToken,
+                               0,
+                               credentials.IdentityToken.Length);
+
+                api.LoginWithProvider(Provider.Apple, identityToken, (user) =>
+                {
+                    data(user);
+                });
+
             });
         }
     }
