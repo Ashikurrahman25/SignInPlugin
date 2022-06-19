@@ -192,9 +192,17 @@ public class UIController : MonoBehaviour
     public void AppleLogin()
     {
         ShowLoadingPanel();
+
         auth.AppleLogin((data) =>
         {
+            Debug.Log(data);
             var txt = JObject.Parse(data);
+
+            foreach (var value in txt)
+            {
+                Debug.LogWarning(value.Key);
+            }
+
             string uID = txt["localId"].ToString();
             string idToken = txt["idToken"].ToString();
 
