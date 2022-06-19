@@ -194,7 +194,30 @@ public class UIController : MonoBehaviour
         ShowLoadingPanel();
         auth.AppleLogin((data) =>
         {
-            CommonLogin(data);
+            api.GetData("user", uID, idToken, (userData) =>
+            {
+                if (userData.Equals("null"))
+                {
+                    Global.ghostUser.Name = txt["fullName"].ToString();
+                    Global.ghostUser.GhostCoin = 0;
+                    Global.ghostUser.Email = txt["email"].ToString();
+                    Global.ghostUser.UID = uID;
+
+                    api.PutData("user", uID, Global.ghostUser, idToken);
+                }
+                else
+                    Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
+
+
+                nameText.text = Global.ghostUser.Name;
+                emailText.text = Global.ghostUser.Email;
+                ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
+
+                CheckGameList(uID, idToken, Global.ghostUser);
+                totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
+                ghostProfile.SetActive(true);
+                HideLoadingPanel();
+            });
         });
     }
 
