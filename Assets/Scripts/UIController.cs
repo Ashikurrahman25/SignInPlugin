@@ -194,46 +194,7 @@ public class UIController : MonoBehaviour
         ShowLoadingPanel();
         auth.AppleLogin((data) =>
         {
-            var txt = JObject.Parse(data);
-            string uID = txt["localId"].ToString();
-            string idToken = txt["idToken"].ToString();
-
-            api.CheckEmailVerified(idToken, (bool isVerified) =>
-            {
-                if (!isVerified)
-                {
-                    api.SendVerificationEmail(idToken);
-                    MoveIn(confirmPanel);
-                    HideLoadingPanel();
-                }
-                else
-                {
-                    api.GetData("user", uID, idToken, (userData) =>
-                    {
-                        if (userData.Equals("null"))
-                        {
-                            Global.ghostUser.Name = txt["displayName"].ToString();
-                            Global.ghostUser.GhostCoin = 0;
-                            Global.ghostUser.Email = txt["email"].ToString();
-                            Global.ghostUser.UID = uID;
-
-                            api.PutData("user", uID, Global.ghostUser, idToken);
-                        }
-                        else
-                            Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
-
-
-                        nameText.text = Global.ghostUser.Name;
-                        emailText.text = Global.ghostUser.Email;
-                        ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
-                        CheckGameList(uID, idToken, Global.ghostUser);
-
-                        totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
-                        ghostProfile.SetActive(true);
-                        HideLoadingPanel();
-                    });
-                }
-            });
+            CommonLogin(data);
         });
     }
 
@@ -242,47 +203,7 @@ public class UIController : MonoBehaviour
         ShowLoadingPanel();
         auth.GoogleLogin((data) =>
         {
-
-            var txt = JObject.Parse(data);
-            string uID = txt["localId"].ToString();
-            string idToken = txt["idToken"].ToString();
-
-            api.CheckEmailVerified(idToken, (bool isVerified) =>
-             {
-                 if (!isVerified)
-                 {
-                     api.SendVerificationEmail(idToken);
-                     MoveIn(confirmPanel);
-                     HideLoadingPanel();
-                 }
-                 else
-                 {
-                     api.GetData("user", uID, idToken, (userData) =>
-                     {
-                         if (userData.Equals("null"))
-                         {
-                             Global.ghostUser.Name = txt["displayName"].ToString();
-                             Global.ghostUser.GhostCoin = 0;
-                             Global.ghostUser.Email = txt["email"].ToString();
-                             Global.ghostUser.UID = uID;
-
-                             api.PutData("user", uID, Global.ghostUser, idToken);
-                         }
-                         else
-                             Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
-
-
-                         nameText.text = Global.ghostUser.Name;
-                         emailText.text = Global.ghostUser.Email;
-                         ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
-                         CheckGameList(uID, idToken, Global.ghostUser);
-
-                         totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
-                         ghostProfile.SetActive(true);
-                         HideLoadingPanel();
-                     });
-                 }
-             });
+            CommonLogin(data);
         });
     }
     public void FacebookLogin()
@@ -293,17 +214,25 @@ public class UIController : MonoBehaviour
 
     public void HandleFacebookLogin(string data)
     {
+        CommonLogin(data);
+    }
+
+    public void CommonLogin(string data)
+    {
+        Debug.Log(data);
+
         var txt = JObject.Parse(data);
         string uID = txt["localId"].ToString();
         string idToken = txt["idToken"].ToString();
 
         api.CheckEmailVerified(idToken, (bool isVerified) =>
         {
-            Debug.Log(isVerified);
-
             if (!isVerified)
             {
-                //api.SendVerificationEmail(idToken);
+                if (txt.ContainsKey("isNewUser"))
+                    api.SendVerificationEmail(idToken);
+
+
                 MoveIn(confirmPanel);
                 HideLoadingPanel();
             }
@@ -336,6 +265,7 @@ public class UIController : MonoBehaviour
             }
         });
     }
+
     public void CheckGameList(string uID, string idToke, GhostUser ghostUser)
     {
         int gameIndex = ghostUser.Games.FindIndex(game => game.Equals(config.gameName));
