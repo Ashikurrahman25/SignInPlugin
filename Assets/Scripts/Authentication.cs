@@ -154,6 +154,7 @@ namespace RestAPIHelper
                                0,
                                credentials.IdentityToken.Length);
 
+                Global.appleFullName = credentials.FullName.ToString();
                 api.LoginWithProvider(Provider.Apple, identityToken, (user) =>
                 {
                     data(user);

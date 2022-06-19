@@ -200,16 +200,11 @@ public class UIController : MonoBehaviour
             string uID = txt["localId"].ToString();
             string idToken = txt["idToken"].ToString();
 
-            Debug.LogWarning(uID);
-            Debug.LogWarning(idToken);
-
             api.GetData("user", uID, idToken, (userData) =>
             {
-                Debug.LogWarning("user data");
-
                 if (userData.Equals("null"))
                 {
-                    Global.ghostUser.Name = txt["fullName"].ToString();
+                    Global.ghostUser.Name = Global.appleFullName;
                     Global.ghostUser.GhostCoin = 0;
                     Global.ghostUser.Email = txt["email"].ToString();
                     Global.ghostUser.UID = uID;
