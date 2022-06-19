@@ -396,17 +396,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
---- !u!114 &426199825 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4478699172791371731, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-  m_PrefabInstance: {fileID: 1976169988}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc8134abc08494d62a2a8ef9cee96e20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,10 +578,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1978613437, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_text
-      value: Use Different Provider
-      objectReference: {fileID: 0}
     - target: {fileID: 4478699172350613122, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -824,34 +809,6 @@ PrefabInstance:
     - target: {fileID: 4478699173310840293, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4478699173310840295, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4478699173310840295, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4478699173310840295, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 426199825}
-    - target: {fileID: 4478699173310840295, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4478699173310840295, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AppleLogin
-      objectReference: {fileID: 0}
-    - target: {fileID: 4478699173310840295, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4478699173310840295, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4478699173455555746, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_SizeDelta.y
