@@ -262,7 +262,7 @@ namespace RestAPIHelper
             {
                 Uri = $"{DatabaseURL}/{child}/{identifier}.json?auth={idToken}",
                 Method = "GET",
-                Timeout = 10
+                Timeout = 20
 
             }).Then(response =>
             {

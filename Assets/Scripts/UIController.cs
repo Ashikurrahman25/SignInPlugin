@@ -195,19 +195,18 @@ public class UIController : MonoBehaviour
 
         auth.AppleLogin((data) =>
         {
-            Debug.Log(data);
             var txt = JObject.Parse(data);
-
-            foreach (var value in txt)
-            {
-                Debug.LogWarning(value.Key);
-            }
 
             string uID = txt["localId"].ToString();
             string idToken = txt["idToken"].ToString();
 
+            Debug.LogWarning(uID);
+            Debug.LogWarning(idToken);
+
             api.GetData("user", uID, idToken, (userData) =>
             {
+                Debug.LogWarning("user data");
+
                 if (userData.Equals("null"))
                 {
                     Global.ghostUser.Name = txt["fullName"].ToString();
