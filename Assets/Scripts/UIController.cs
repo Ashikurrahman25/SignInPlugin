@@ -29,10 +29,16 @@ public class UIController : MonoBehaviour
     public GameObject confirmPanel;
     public GameObject ghostProfile;
     public GameObject warningPanel;
+    public GameObject nameInputPanel;
+    public TMP_InputField nameInpuField;
 
     APIHelper api;
     Authentication auth;
     public static UIController instance;
+
+    string email;
+    string uid;
+    string appleIdToken;
 
     private void Awake()
     {
@@ -42,12 +48,6 @@ public class UIController : MonoBehaviour
         else Destroy(this);
     }
 
-    private void Start()
-    {
-        TryAutoLogin();
-    }
-
-   
     public void WarnFacebookLogin()
     {
         HideLoadingPanel();
@@ -200,16 +200,17 @@ public class UIController : MonoBehaviour
             string uID = txt["localId"].ToString();
             string idToken = txt["idToken"].ToString();
 
+            email = txt["email"].ToString();
+            uid = uID;
+            appleIdToken = idToken;
+
             api.GetData("user", uID, idToken, (userData) =>
             {
                 if (userData.Equals("null"))
                 {
-                    Global.ghostUser.Name = Global.appleFullName;
-                    Global.ghostUser.GhostCoin = 0;
-                    Global.ghostUser.Email = txt["email"].ToString();
-                    Global.ghostUser.UID = uID;
-
-                    api.PutData("user", uID, Global.ghostUser, idToken);
+                    HideLoadingPanel();
+                    MoveIn(nameInputPanel);
+                    return;
                 }
                 else
                     Global.ghostUser = JsonConvert.DeserializeObject<GhostUser>(userData);
@@ -244,6 +245,31 @@ public class UIController : MonoBehaviour
     public void HandleFacebookLogin(string data)
     {
         CommonLogin(data);
+    }
+
+    public void UploadAppleData()
+    {
+        if(string.IsNullOrEmpty(nameInpuField.text) ||
+           string.IsNullOrWhiteSpace(nameInpuField.text))
+        {
+            Alert.instance.Init("Check Input", "Name is required to continue", false);
+            return;
+        }
+
+        Global.ghostUser.Name = nameInpuField.text;
+        Global.ghostUser.GhostCoin = 0;
+        Global.ghostUser.Email = email;
+        Global.ghostUser.UID = uid;
+
+        api.PutData("user", uid, Global.ghostUser, appleIdToken);
+
+        nameText.text = Global.ghostUser.Name;
+        emailText.text = Global.ghostUser.Email;
+        ghostCoinText.text = Global.ghostUser.GhostCoin.ToString("00");
+
+        CheckGameList(uid, appleIdToken, Global.ghostUser);
+        totalGameText.text = Global.ghostUser.Games.Count.ToString("00");
+        ghostProfile.SetActive(true);
     }
 
     public void CommonLogin(string data)
