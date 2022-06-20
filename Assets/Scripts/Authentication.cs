@@ -1,3 +1,4 @@
+using AppleAuth.Extensions;
 using AppleAuth.Interfaces;
 using Facebook.Unity;
 using Google;
@@ -154,7 +155,21 @@ namespace RestAPIHelper
                                0,
                                credentials.IdentityToken.Length);
 
-                Global.appleFullName = credentials.FullName.ToString();
+                Debug.Log(credentials.ToString());
+
+                if (credentials.FullName != null)
+                { 
+                    var fullName = credentials.FullName;
+                    Global.appleFullName = fullName.ToLocalizedString();
+
+                    Debug.LogWarning(Global.appleFullName);
+                }
+                else
+                {
+                    Debug.LogWarning("Need to get name input");
+                }
+
+                //Global.appleFullName = credentials.FullName.GivenName;
                 api.LoginWithProvider(Provider.Apple, identityToken, (user) =>
                 {
                     data(user);
