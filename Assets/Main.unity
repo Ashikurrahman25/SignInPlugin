@@ -407,8 +407,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
-  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -424,18 +422,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
---- !u!114 &519420030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3183c76f92b18104c8fb52d4c1fd4cf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -493,18 +479,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a00eb39b3a65ecd43900249cc83384a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1276739195
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,10 +552,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 12814288, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_Name
-      value: NameText
-      objectReference: {fileID: 0}
     - target: {fileID: 687721067, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -617,14 +587,6 @@ PrefabInstance:
     - target: {fileID: 1551453148, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2136298304, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 726707044888206397, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_Name
-      value: GhostCoin
       objectReference: {fileID: 0}
     - target: {fileID: 4478699172350613122, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -985,18 +947,6 @@ PrefabInstance:
     - target: {fileID: 4478699174149401389, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4720689707429382313, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_Name
-      value: GameNamesText
-      objectReference: {fileID: 0}
-    - target: {fileID: 5897380192960425265, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_Name
-      value: TotalGamesText
-      objectReference: {fileID: 0}
-    - target: {fileID: 7016048320156181768, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
-      propertyPath: m_Name
-      value: EmailText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
