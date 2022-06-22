@@ -4,9 +4,6 @@ using AppleAuth.Extensions;
 using AppleAuth.Interfaces;
 using AppleAuth.Native;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 public class AuthApple : MonoBehaviour
@@ -56,37 +53,13 @@ public class AuthApple : MonoBehaviour
                 // Obtained credential, cast it to IAppleIDCredential
                 var appleIdCredential = credential as IAppleIDCredential;
                 appleIDCredentials(appleIdCredential);
-                //if (appleIdCredential != null)
-                //{
-                //    // Apple User ID
-                //    // You should save the user ID somewhere in the device
-
-                //    // Email (Received ONLY in the first login)
-                //    var email = appleIdCredential.Email;
-
-                //    // Full name (Received ONLY in the first login)
-                //    var fullName = appleIdCredential.FullName;
-
-                //    // Identity token
-                //    var identityToken = Encoding.UTF8.GetString(
-                //                appleIdCredential.IdentityToken,
-                //                0,
-                //                appleIdCredential.IdentityToken.Length);
-
-                //    // Authorization code
-                //    var authorizationCode = Encoding.UTF8.GetString(
-                //                appleIdCredential.AuthorizationCode,
-                //                0,
-                //                appleIdCredential.AuthorizationCode.Length);
-
-                //    // And now you have all the information to create/login a user in your system
-                //}
             },
             error =>
             {
                 // Something went wrong
                 var authorizationErrorCode = error.GetAuthorizationErrorCode();
                 appleIDCredentials(null);
+                Alert.instance.Init(authorizationErrorCode.ToString(), "Something went wrong", false);
             });
     }
 }

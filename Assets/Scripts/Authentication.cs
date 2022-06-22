@@ -37,7 +37,6 @@ namespace RestAPIHelper
         {
             if (FB.IsInitialized)
             {
-                // Signal an app activation App Event
                 FB.ActivateApp();
             }
             else
@@ -69,7 +68,6 @@ namespace RestAPIHelper
                 Debug.Log(aToken.TokenString);
                 api.LoginWithProvider(Provider.Facebook, aToken.TokenString, (user) =>
                 {
-                    //Debug.Log(user);
                     UIController.instance.HandleFacebookLogin(user);
                 });
             }
@@ -155,7 +153,6 @@ namespace RestAPIHelper
                                0,
                                credentials.IdentityToken.Length);
 
-                //Global.appleFullName = credentials.FullName.GivenName;
                 api.LoginWithProvider(Provider.Apple, identityToken, (user) =>
                 {
                     data(user);

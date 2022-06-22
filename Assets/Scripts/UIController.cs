@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -32,6 +33,13 @@ public class UIController : MonoBehaviour
     public GameObject nameInputPanel;
     public TMP_InputField nameInpuField;
 
+    [Space]
+    [Header("Login Contents")]
+    public GameObject emailPass;
+    public GameObject apple;
+    public GameObject google;
+    public GameObject facebook;
+
     APIHelper api;
     Authentication auth;
     public static UIController instance;
@@ -46,6 +54,14 @@ public class UIController : MonoBehaviour
         auth = new Authentication(config, api);
         if (instance == null) instance = this;
         else Destroy(this);
+
+        emailPass.SetActive(config.emailPassLogin);
+        apple.SetActive(config.appleLogin);
+        google.SetActive(config.googleLogin);
+        facebook.SetActive(config.facebookLogin);
+
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+            apple.GetComponent<Button>().interactable = true;
     }
 
     public void WarnFacebookLogin()
@@ -61,7 +77,6 @@ public class UIController : MonoBehaviour
             string refreshToken = PlayerPrefs.GetString("refreshToken");
             api.AutoLogin(refreshToken, (response) =>
              {
-                 //HideLoadingPanel();
                  var txt = JObject.Parse(response);
                  string uID = txt["user_id"].ToString();
                  string idToken = txt["id_token"].ToString();
@@ -70,7 +85,6 @@ public class UIController : MonoBehaviour
                  {
                      if (!isVerified)
                      {
-                         //api.SendVerificationEmail(idToken);
                          MoveIn(confirmPanel);
                          HideLoadingPanel();
                      }

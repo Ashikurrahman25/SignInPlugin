@@ -10,4 +10,6 @@ public class Config : ScriptableObject
     public string webClientIdIOS;
     public string authDatabaseURL;
     public string gameName;
+
+    public bool appleLogin, emailPassLogin, googleLogin, facebookLogin;
 }

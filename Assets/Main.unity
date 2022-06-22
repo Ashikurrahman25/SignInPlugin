@@ -578,6 +578,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 12814288, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
+      propertyPath: m_Name
+      value: NameText
+      objectReference: {fileID: 0}
     - target: {fileID: 687721067, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -613,6 +617,14 @@ PrefabInstance:
     - target: {fileID: 1551453148, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136298304, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 726707044888206397, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
+      propertyPath: m_Name
+      value: GhostCoin
       objectReference: {fileID: 0}
     - target: {fileID: 4478699172350613122, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -973,6 +985,18 @@ PrefabInstance:
     - target: {fileID: 4478699174149401389, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720689707429382313, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
+      propertyPath: m_Name
+      value: GameNamesText
+      objectReference: {fileID: 0}
+    - target: {fileID: 5897380192960425265, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
+      propertyPath: m_Name
+      value: TotalGamesText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016048320156181768, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
+      propertyPath: m_Name
+      value: EmailText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85233034317c8614db9fcc2f6f537b8a, type: 3}
